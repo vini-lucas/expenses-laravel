@@ -11,7 +11,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'cpf' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Erro: o nome é obrigatório!',
+            'cpf.required' => 'Erro: o CPF é obrigatório!',
+            'email.required' => 'Erro: o e-mail é obrigatório!',
+            'password.required' => 'Erro: a senha é obrigatória!',
+            'cpf.unique' => 'Erro: já existe um registro com este CPF!',
+            'email.email' => 'Erro: e-mail inválido!',
+            'email.unique' => 'Erro: já existe um registro com este e-mail!',
+            'password.min' => 'Erro: a senha precisa possuir ao mínimo 6 caracteres!'
         ];
     }
 }
