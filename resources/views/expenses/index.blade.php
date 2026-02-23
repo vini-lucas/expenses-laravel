@@ -1,30 +1,30 @@
 @extends('layouts.admin')
 @section('content')
     <div>
-        <h2>USUÁRIOS</h2>
+        <h2>DESPESAS</h2>
 
         <table>
 
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Ações</th>
+                    <th>Valor</th>
+                    <th>É fixa?</th>
                 </tr>
             </thead>
-            @forelse ($users as $user)
+            @forelse ($expenses as $expense)
                 <tbody>
                     <tr>
                         <td>
-                            {{ $user->name }}
+                            {{ $expense->name }}
                         </td>
                         <td>
-                            {{ $user->cpf }}
+                            {{ $expense->value }}
                         </td>
                         <td>
-                            <a href="{{ route('users.show', ['user' => $user->id]) }}">Vizualizar</a> - <a
-                                href="{{ route('users.edit', ['user' => $user->id]) }}">Editar</a>
-                            <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST"
+                            <a href="{{ route('expenses.show', ['expense' => $expense->id]) }}">Vizualizar</a> - <a
+                                href="{{ route('expenses.edit', ['expense' => $expense->id]) }}">Editar</a>
+                            <form action="{{ route('expenses.destroy', ['expense' => $expense->id]) }}" method="POST"
                                 autocomplete="off">
                                 @csrf
                                 @method('DELETE')
@@ -39,7 +39,7 @@
 
         </table><br>
 
-        <a href="{{ route('users.create') }}">Criar</a> <x-alert />
+        <a href="{{ route('expenses.create') }}">Criar</a> <x-alert />
     </div>
 
 @endsection
