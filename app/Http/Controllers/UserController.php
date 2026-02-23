@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::get(['name', 'cpf', 'id']);
         return view('users.index', ['users' => $users]);
     }
 
@@ -40,7 +40,8 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
-            return redirect()->route('users.index')->with('success', 'Êxito: registro inserido com sucesso!');
+            $id = User::where('cpf', $request->cpf)->first();
+            return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('users.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
@@ -51,7 +52,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -59,7 +60,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
@@ -67,7 +68,18 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        try {
+            $user->update([
+                'name' => $request->name,
+                'cpf' => $request->cpf,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+            $id = User::where('cpf', $request->cpf)->first();
+            return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro atualizado com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('users.index')->with('error', 'Erro: registro não atualizado com sucesso!');
+        }
     }
 
     /**
@@ -75,6 +87,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return redirect()->route('users.index')->with('success', 'Êxito: registro excluído com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('users.index')->with('error', 'Erro: registro não excluído com sucesso!');
+        }
     }
 }

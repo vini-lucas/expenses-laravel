@@ -11,7 +11,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,28 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = $this->route('user');
+
         return [
-            //
+            'name' => 'required',
+            'cpf' => 'required|digits:11|unique:users,cpf,' . ($user ? $user->id : null),
+            'email' => 'required|email|unique:users,email,' . ($user ? $user->id : null),
+            'password' => 'required|min:6'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Erro: o nome é obrigatório!',
+            'cpf.required' => 'Erro: o CPF é obrigatório!',
+            'email.required' => 'Erro: o e-mail é obrigatório!',
+            'password.required' => 'Erro: a senha é obrigatória!',
+            'cpf.unique' => 'Erro: já existe um registro com este CPF!',
+            'email.email' => 'Erro: e-mail inválido!',
+            'email.unique' => 'Erro: já existe um registro com este e-mail!',
+            'password.min' => 'Erro: a senha precisa possuir ao mínimo 6 caracteres!',
+            'cpf.digits' => 'Erro: CPF inválido!'
         ];
     }
 }

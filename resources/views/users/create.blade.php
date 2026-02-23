@@ -3,7 +3,7 @@
     <div>
         <h2>NOVO USUÁRIO</h2>
 
-        <form action="{{ route('users.store') }}" method="POST">
+        <form action="{{ route('users.store') }}" method="POST" autocomplete="off">
             @csrf
             @method('POST') - 
 
