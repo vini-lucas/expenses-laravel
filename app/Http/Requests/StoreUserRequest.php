@@ -23,7 +23,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'cpf' => 'required|unique:users',
+            'cpf' => 'required|unique:users|digits:11',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
         ];
@@ -39,7 +39,8 @@ class StoreUserRequest extends FormRequest
             'cpf.unique' => 'Erro: já existe um registro com este CPF!',
             'email.email' => 'Erro: e-mail inválido!',
             'email.unique' => 'Erro: já existe um registro com este e-mail!',
-            'password.min' => 'Erro: a senha precisa possuir ao mínimo 6 caracteres!'
+            'password.min' => 'Erro: a senha precisa possuir ao mínimo 6 caracteres!',
+            'cpf.digits' => 'Erro: CPF inválido!'
         ];
     }
 }

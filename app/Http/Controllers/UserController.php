@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -31,7 +33,17 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        try {
+            User::create([
+                'name' => $request->name,
+                'cpf' => $request->cpf,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+            return redirect()->route('users.index')->with('success', 'Êxito: registro inserido com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('users.index')->with('error', 'Erro: registro não inserido com sucesso!');
+        }
     }
 
     /**
