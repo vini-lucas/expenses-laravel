@@ -11,11 +11,16 @@
 
             <input type="text" name="value" id="value" value="{{ old('value') }}" placeholder="Ex.: R$100,00" style="text-align: center;"><br><br> ---
 
-            <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}" style="text-align: center;"><br><br> ----
+            <label for="fixed">É fixa?</label> <select name="fixed" id="fixed" style="text-align: center;">
+                <option value="no_info" selected>Selecione:</option>
+                <option value="">Sim</option>
+                <option value="">Não</option>
+            </select>
+                <br><br> ----
 
-            <input type="password" name="password" id="password" placeholder="***************" style="text-align: center;"><br><br>
+            <label for="due_date">Expira em</label> <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}" style="text-align: center;"><br><br>
 
-            <input type="submit" value="Criar"> - <a href="{{ route('users.index') }}">Listar</a> <x-alert />
+            <input type="submit" value="Criar"> - <a href="{{ route('expenses.index') }}">Listar</a> <x-alert />
 
         </form><br>
     </div>

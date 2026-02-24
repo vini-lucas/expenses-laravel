@@ -35,10 +35,12 @@ class ExpenseController extends Controller
         try {
             Expense::create([
                 'name' => $request->name,
-                'fixed' => $request->fixed,
                 'value' => $request->value,
                 'due_date' => $request->due_date,
-                'payment_method' => $request->payment_method
+                'payment_deadline_id' => $request->payment_deadline_id,
+                'user_id' => $request->user_id,
+                'category_id' => $request->category_id,
+                'card_id' => $request->card_id
             ]);
             $id = Expense::orderBy('id', 'DESC')->first();
             return redirect()->route('expenses.show', ['expense' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
@@ -71,10 +73,12 @@ class ExpenseController extends Controller
         try {
             $expense->update([
                 'name' => $request->name,
-                'fixed' => $request->fixed,
                 'value' => $request->value,
                 'due_date' => $request->due_date,
-                'payment_method' => $request->payment_method
+                'payment_deadline_id' => $request->payment_deadline_id,
+                'user_id' => $request->user_id,
+                'category_id' => $request->category_id,
+                'card_id' => $request->card_id
             ]);
             $id = Expense::where('id', $expense->id)->first();
             return redirect()->route('expenses.show', ['expense' => $id])->with('success', 'Êxito: registro atualizado com sucesso!');

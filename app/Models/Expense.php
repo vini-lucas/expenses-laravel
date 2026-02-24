@@ -13,8 +13,10 @@ class Expense extends Model
     protected $fillable = [
         'name',
         'value',
-        'fixed',
+        'payment_deadline',
         'due_date',
         'payment_method'
     ];
+
+    protected $table = "expenses";
 }

@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Card;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCardRequest;
+use App\Http\Requests\UpdateCardRequest;
+use Exception;
+
+class CardController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $cards = Card::get();
+        return view('cards.index', ['cards' => $cards]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('cards.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreCardRequest $request)
+    {
+        try {
+            Card::create([
+                'bank' => $request->bank,
+                'end' => $request->end
+            ]);
+            return redirect()->route('cards.index')->with('success', 'Êxito: registro inserido com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('cards.index')->with('error', 'Erro: registro não inserido com sucesso!');
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Card $card)
+    {
+        return view('cards.edit', ['card' => $card]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreCardRequest $request, Card $card)
+    {
+        try {
+            $card->update([
+                'bank' => $request->bank,
+                'end' => $request->end,
+            ]);;
+            return redirect()->route('cards.index')->with('success', 'Êxito: registro atualizado com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('cards.index')->with('error', 'Erro: registro não atualizado com sucesso!');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Card $card)
+    {
+        try {
+            $card->delete();
+            return redirect()->route('cards.index')->with('success', 'Êxito: registro excluído com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('cards.index')->with('error', 'Erro: registro não excluído com sucesso!');
+        }
+    }
+}

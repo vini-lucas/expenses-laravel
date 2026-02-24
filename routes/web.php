@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CardController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\PaymentDeadlineController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,5 +13,8 @@ Route::get('/', function () {
 
 Route::resources([
     'users' => UserController::class,
-    'expenses' => ExpenseController::class
+    'expenses' => ExpenseController::class,
+    'cards' => CardController::class,
+    'payments_deadline' => PaymentDeadlineController::class,
+    'categories' => CategoryController::class
 ]);
