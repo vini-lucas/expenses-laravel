@@ -12,8 +12,8 @@ class PaymentDeadlineController extends Controller
 {
     public function index()
     {
-        $payment_deadline = PaymentDeadline::get();
-        return view('payments_deadline.index', ['payment_deadline' => $payment_deadline]);
+        $payments_deadline = PaymentDeadline::get();
+        return view('payments_deadline.index', ['payments_deadline' => $payments_deadline]);
     }
 
     /**
@@ -50,7 +50,7 @@ class PaymentDeadlineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePaymentDeadlineRequest $request, PaymentDeadline $payment_deadline)
+    public function update(StorePaymentDeadlineRequest $request, PaymentDeadline $payment_deadline)
     {
         try {
             $payment_deadline->update([

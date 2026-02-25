@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('bank');
-            $table->integer('end');
+            $table->integer('end')->unique();
         });
     }
 
