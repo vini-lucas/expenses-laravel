@@ -13,9 +13,12 @@ class Expense extends Model
     protected $fillable = [
         'name',
         'value',
-        'payment_deadline',
+        'payment_deadline_id',
         'due_date',
-        'payment_method'
+        'payment_method_id',
+        'user_id',
+        'card_id',
+        'category_id'
     ];
 
     protected $table = "expenses";
