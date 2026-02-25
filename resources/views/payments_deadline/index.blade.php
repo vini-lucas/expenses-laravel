@@ -18,8 +18,8 @@
                             {{ $payment_deadline->name }}
                         </td>
                         <td>
-                            <a href="{{ route('payments_deadline.edit', ['payments_deadline' => $payment_deadline->id]) }}">Editar</a>
-                            <form action="{{ route('payments_deadline.destroy', ['payments_deadline' => $payment_deadline->id]) }}" method="POST"
+                            <a href="{{ route('payments_deadline.edit', ['payment_deadline' => $payment_deadline->id]) }}">Editar</a>
+                            <form action="{{ route('payments_deadline.destroy', ['payment_deadline' => $payment_deadline->id]) }}" method="POST"
                                 autocomplete="off">
                                 @csrf
                                 @method('DELETE')

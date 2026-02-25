@@ -15,6 +15,11 @@ Route::resources([
     'users' => UserController::class,
     'expenses' => ExpenseController::class,
     'cards' => CardController::class,
-    'payments_deadline' => PaymentDeadlineController::class,
+    //'payments_deadline' => PaymentDeadlineController::class,
     'categories' => CategoryController::class
 ]);
+
+Route::resource('payments_deadline', PaymentDeadlineController::class)
+    ->parameters([
+        'payments_deadline' => 'payment_deadline'
+    ]);
