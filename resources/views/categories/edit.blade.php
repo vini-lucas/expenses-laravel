@@ -5,9 +5,13 @@
 
         <form action="{{ route('categories.update', ['category' => $category->id]) }}" method="POST" autocomplete="off">
             @csrf
-            @method('PUT') - 
+            @method('PUT') -
 
-            <input type="text" name="name" id="name" value="{{ $category->name }}" placeholder="Ex.: Lazer" style="text-align: center;"><br><br> -- 
+            <input type="text" name="name" id="name" value="{{ $category->name }}" placeholder="Ex.: Lazer"
+                style="text-align: center;"><br><br> --
+
+            <textarea name="observation" id="observation" placeholder="Ex.: Açaí, sapatos ...">{{ $category->observation }}</textarea>
+            <br><br>
 
             <input type="submit" value="Salvar"> - <a href="{{ route('categories.index') }}">Listar</a> <x-alert />
 

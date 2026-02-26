@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div>
-        <h2>NOVA DESPESA    </h2>
+        <h2>NOVA DESPESA</h2>
 
         <form action="{{ route('expenses.store') }}" method="POST" autocomplete="off">
             @csrf

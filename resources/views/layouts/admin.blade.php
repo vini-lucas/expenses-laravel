@@ -7,6 +7,8 @@
     <title>Expenses - Administrativo</title>
 </head>
 <body>
+
+     | <a href="{{ route('dashboard') }}">Dashboard</a> - <a href="{{ route('logoff') }}">Sair</a> | <br>
     @yield('content')
 </body>
 </html>

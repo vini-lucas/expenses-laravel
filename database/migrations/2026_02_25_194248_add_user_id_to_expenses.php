@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('expenses', function (Blueprint $table) {
           $table->foreignId('user_id')
-                ->after('password')
+                ->after('due_date')
                 ->constrained('users')
                 ->onUpdate('restrict')
                 ->onDelete('restrict');

@@ -32,6 +32,7 @@ class CategoryController extends Controller
         try {
             Category::create([
                 'name' => $request->name,
+                'observation' => $request->observation
             ]);
             return redirect()->route('categories.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
@@ -54,7 +55,8 @@ class CategoryController extends Controller
     {
         try {
             $category->update([
-                'name' => $request->name
+                'name' => $request->name,
+                'observation' => $request->observation
             ]);
             return redirect()->route('categories.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {

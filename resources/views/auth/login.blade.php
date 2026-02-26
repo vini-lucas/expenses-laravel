@@ -3,7 +3,7 @@
 <div>
     <h1>Conecte-se!</h1>
 
-    <form action="{{ route('login.login') }}" method="POST" autocomplete="off">
+    <form action="{{ route('login.proccess') }}" method="POST" autocomplete="off">
             @csrf
             @method('POST') - 
 
@@ -11,7 +11,7 @@
 
             <input type="password" name="password" id="password" placeholder="***************" style="text-align: center;"><br><br>
 
-            <input type="submit" value="Entrar"> - <a href="{{ route('users.index') }}">Sou NOVO</a> <x-alert />
+            <input type="submit" value="Entrar"> - <a href="{{ route('register') }}">Sou NOVO</a> <x-alert />
 
         </form><br>
 </div>
