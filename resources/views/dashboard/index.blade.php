@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     <div>
-        <h2>Olá, {{ $name }}!</h2>
+        <h2>Olá, {{ $name }}!</h2><br>
 
-        <a href="{{ route('users.index') }}">Usuários</a> - <a href="{{ route('expenses.index') }}">Despesas</a> - <a href="{{ route('logoff') }}">Sair</a> <x-alert />
+        <x-alert />
+        
     </div>
 @endsection

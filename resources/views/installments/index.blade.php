@@ -1,29 +1,25 @@
 @extends('layouts.admin')
 @section('content')
     <div>
-        <h2>CATEGORIAS</h2>
+        <h2>PARCELAMENTOS</h2>
 
         <table>
 
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Observação</th>
                     <th>Ações</th>
                 </tr>
             </thead>
-            @forelse ($categories as $category)
+            @forelse ($installments as $installment)
                 <tbody>
                     <tr>
                         <td>
-                            {{ $category->name }}
+                            {{ $installment->name }}
                         </td>
                         <td>
-                            {{ ($category->observation) ? ($category->observation) : 'Sem observação' }}
-                        </td>
-                        <td>
-                            <a href="{{ route('categories.edit', ['category' => $category->id]) }}">Editar</a>
-                            <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="POST"
+                            <a href="{{ route('installments.edit', ['installments' => $installment]) }}">Editar</a>
+                            <form action="{{ route('installments.destroy', ['installments' => $installment->id]) }}" method="POST"
                                 autocomplete="off">
                                 @csrf
                                 @method('DELETE')
@@ -39,6 +35,6 @@
 
         </table><br>
 
-        <a href="{{ route('categories.create') }}">Criar</a> <x-alert />
+        <a href="{{ route('installments.create') }}">Criar</a> <x-alert />
     </div>
 @endsection

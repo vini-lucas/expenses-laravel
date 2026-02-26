@@ -18,7 +18,7 @@
             </select>
                 <br><br> ----
 
-            <label for="due_date">Expira em</label> <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}" style="text-align: center;"><br><br>
+            <label for="due_date">Expira em</label> <select type="date" name="due_date" id="due_date" value="{{ old('due_date') }}" style="text-align: center;"><br><br>
 
             <input type="submit" value="Criar"> - <a href="{{ route('expenses.index') }}">Listar</a> <x-alert />
 

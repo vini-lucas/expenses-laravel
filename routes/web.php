@@ -4,6 +4,7 @@ use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentDeadlineController;
 use App\Http\Controllers\PaymentMethodController;
@@ -25,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
         'expenses' => ExpenseController::class,
         'cards' => CardController::class,
         'categories' => CategoryController::class,
+        'installments' => InstallmentController::class
     ]);
 
     Route::resource('payments_deadline', PaymentDeadlineController::class)

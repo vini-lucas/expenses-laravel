@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Card;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,14 @@ class CardSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Card::firstOrCreate([
+            'bank' => 'Nubank',
+            'end' => '1234'
+        ]);
+
+        Card::firstOrCreate([
+            'bank' => 'Inter',
+            'end' => '4321'
+        ]);
     }
 }
