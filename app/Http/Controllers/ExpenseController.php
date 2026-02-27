@@ -8,6 +8,12 @@ use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
 use Exception;
 
+use App\Models\PaymentDeadline;
+use App\Models\Installment;
+use App\Models\PaymentMethod;
+use App\Models\Category;
+use App\Models\Card;
+
 class ExpenseController extends Controller
 {
     /**
@@ -15,8 +21,8 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::get(['name', 'id', 'fixed']);
-        return view('expenses.index',['expenses' => $expenses]);
+        $expenses = Expense::get(['id', 'name', 'value']);
+        return view('expenses.index', ['expenses' => $expenses]);
     }
 
     /**
@@ -24,7 +30,19 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('expenses.create');
+        $payments_deadline = PaymentDeadline::get(['name', 'id']);
+        $installments = Installment::orderBy('name', 'DESC')->get(['name', 'id']);
+        $payment_methods = PaymentMethod::get(['name', 'id']);
+        $categories = Category::get(['name', 'id']);
+        $cards = Card::get(['bank', 'id']);
+
+        return view('expenses.create', [
+            'payments_deadline' => $payments_deadline,
+            'installments' => $installments,
+            'payment_methods' => $payment_methods,
+            'categories' => $categories,
+            'cards' => $cards
+        ]);
     }
 
     /**

@@ -15,4 +15,9 @@ class Installment extends Model
     ];
 
     protected $table = "installments";
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

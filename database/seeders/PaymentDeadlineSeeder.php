@@ -19,7 +19,7 @@ class PaymentDeadlineSeeder extends Seeder
 
         for ($i = 1; $i <= 31; $i++) {
             PaymentDeadline::firstOrCreate([
-                'name' => 'Dia ' . (($i < 10) ? ('0' . $i) : ($i)) . 'x',
+                'name' => 'Dia ' . (($i < 10) ? ('0' . $i) : ($i)),
             ]);
         }
     }

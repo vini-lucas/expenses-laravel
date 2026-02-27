@@ -15,4 +15,9 @@ class PaymentDeadline extends Model
     ];
 
     protected $table = "payments_deadline";
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

@@ -16,4 +16,9 @@ class Card extends Model
     ];
 
     protected $table = "cards";
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

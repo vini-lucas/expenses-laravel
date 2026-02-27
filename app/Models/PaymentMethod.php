@@ -15,4 +15,9 @@ class PaymentMethod extends Model
     ];
 
     protected $table = "payment_methods";
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

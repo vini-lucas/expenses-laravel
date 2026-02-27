@@ -18,8 +18,8 @@
                             {{ $installment->name }}
                         </td>
                         <td>
-                            <a href="{{ route('installments.edit', ['installments' => $installment]) }}">Editar</a>
-                            <form action="{{ route('installments.destroy', ['installments' => $installment->id]) }}" method="POST"
+                            <a href="{{ route('installments.edit', ['installment' => $installment]) }}">Editar</a>
+                            <form action="{{ route('installments.destroy', ['installment' => $installment->id]) }}" method="POST"
                                 autocomplete="off">
                                 @csrf
                                 @method('DELETE')

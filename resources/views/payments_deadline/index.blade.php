@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div>
-        <h2>PRAZOS PARA PAGAMENTO</h2>
+        <h2>PRAZOS PARA VENCIMENTO</h2>
 
         <table>
 
