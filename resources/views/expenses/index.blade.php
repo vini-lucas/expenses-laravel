@@ -9,7 +9,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Valor</th>
-                    <th>É fixa?</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             @forelse ($expenses as $expense)

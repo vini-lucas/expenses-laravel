@@ -15,12 +15,14 @@ class CardSeeder extends Seeder
     {
         Card::firstOrCreate([
             'bank' => 'Nubank',
-            'end' => '1234'
+            'end' => '1234',
+            'user_id' => 1 
         ]);
 
         Card::firstOrCreate([
             'bank' => 'Inter',
-            'end' => '4321'
+            'end' => '4321',
+            'user_id' => 1
         ]);
     }
 }

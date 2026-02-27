@@ -14,11 +14,11 @@ class Expense extends Model
         'name',
         'value',
         'payment_deadline_id',
-        'due_date',
         'payment_method_id',
         'user_id',
         'card_id',
-        'category_id'
+        'category_id',
+        'installment_id'
     ];
 
     protected $table = "expenses";

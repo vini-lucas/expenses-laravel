@@ -13,6 +13,7 @@ use App\Models\Installment;
 use App\Models\PaymentMethod;
 use App\Models\Category;
 use App\Models\Card;
+use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
@@ -31,10 +32,10 @@ class ExpenseController extends Controller
     public function create()
     {
         $payments_deadline = PaymentDeadline::get(['name', 'id']);
-        $installments = Installment::orderBy('name', 'DESC')->get(['name', 'id']);
+        $installments = Installment::orderBy('id', 'ASC')->get(['name', 'id']);
         $payment_methods = PaymentMethod::get(['name', 'id']);
-        $categories = Category::get(['name', 'id']);
-        $cards = Card::get(['bank', 'id']);
+        $categories = Category::get(['name', 'id', 'observation']);
+        $cards = Card::where('user_id', Auth::user()->id)->get();
 
         return view('expenses.create', [
             'payments_deadline' => $payments_deadline,
@@ -54,16 +55,24 @@ class ExpenseController extends Controller
             Expense::create([
                 'name' => $request->name,
                 'value' => $request->value,
-                'due_date' => $request->due_date,
+                'user_id' => Auth::user()->id,
                 'payment_deadline_id' => $request->payment_deadline_id,
-                'user_id' => $request->user_id,
+                'card_id' => (($request->payment_method_id >= 6) ? ($request->payment_method_id) : (null)),
                 'category_id' => $request->category_id,
-                'card_id' => $request->card_id
+                'payment_method_id' => (($request->payment_method_id <= 6) ? ($request->payment_method_id) : (3)),
+                'installment_id' => $request->installment_id
             ]);
+
+            if ($request->payment_method_id >= 6) {
+                $card_up = Card::where('id', $request->payment_method_id);
+                $card_up->update([
+                    'current_invoice' => $card_up->current_invoice + $request->value
+                ]);
+            }
             $id = Expense::orderBy('id', 'DESC')->first();
             return redirect()->route('expenses.show', ['expense' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
-            return redirect()->route('expenses.index')->with('error', 'Erro: registro não inserido com sucesso!');
+            return redirect()->route('expenses.index')->with('error', 'Erro: registro não inserido com sucesso!' . $e->getMessage());
         }
     }
 

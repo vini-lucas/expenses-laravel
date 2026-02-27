@@ -15,17 +15,17 @@ class CategorySeeder extends Seeder
     {
         Category::firstOrCreate([
             'name' => 'Assinaturas',
-            'observation' => 'Streamings em geral (Spotify, Netflix ...).'
+            'observation' => 'Streamings em geral (Spotify, Netflix).'
         ]);
 
         Category::firstOrCreate([
             'name' => 'Contas (fixas)',
-            'observation' => 'Despesas fixas (mensais) da casa em geral (fatura da Copel e Senepar, internet ...).'
+            'observation' => 'Despesas fixas (mensais) da casa em geral (fatura da Copel e Senepar, internet).'
         ]);
 
         Category::firstOrCreate([
             'name' => 'Contas (variáveis)',
-            'observation' => 'Despesas que não necessariamente são geradas todos os meses (cortar o cabelo, gasolina no carro ...).'
+            'observation' => 'Despesas que não necessariamente são geradas todos os meses (cortar o cabelo, gasolina no carro).'
         ]);
 
         Category::firstOrCreate([
@@ -35,7 +35,7 @@ class CategorySeeder extends Seeder
 
         Category::firstOrCreate([
             'name' => 'Comida',
-            'observation' => 'Lanche, marmita, açaí, refrigerante, comida japonesa ...'
+            'observation' => 'Lanche, marmita, açaí, refrigerante, comida japonesa.'
         ]);
     }
 }

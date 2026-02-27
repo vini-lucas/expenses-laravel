@@ -16,7 +16,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('value');
-            $table->date('due_date');
         });
     }
 

@@ -12,7 +12,8 @@ class Card extends Model
 
     protected $fillable = [
         'bank',
-        'end'
+        'end',
+        'user_id'
     ];
 
     protected $table = "cards";
@@ -20,5 +21,10 @@ class Card extends Model
     public function expenses()
     {
         return $this->hasMany(Expense::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 }

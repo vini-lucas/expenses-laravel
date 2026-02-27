@@ -19,7 +19,7 @@
                 @foreach ($payments_deadline as $payment_deadline)
                     <option value="{{ $payment_deadline->id }}"
                         {{ $payment_deadline->id == old('payment_deadline_id') ? 'selected' : '' }}>
-                        {{ $payment_deadline->name }}</option>
+                        {{ $payment_deadline->name == 'SEM PRAZO DE VENCIMENTO' ? $payment_deadline->name : $payment_deadline->name . ' do mês' }}</option>
                 @endforeach
             </select>
             <br><br> ----
@@ -43,27 +43,22 @@
                         {{ $payment_method->id == old('payment_method_id') ? 'selected' : '' }}>
                         {{ $payment_method->name }}</option>
                 @endforeach
-            </select>
+                @foreach ($cards as $card)
+                    <option value="{{ $card->id }}"
+                        {{ $card->id == old('payment_method_id') ? 'selected' : '' }}>Crédito {{ '(' . $card->bank . ')' }} - final {{ $card->end }}</option>
+                @endforeach
+            </select> - <span>Seu cartão não está aqui? <a href="{{ route('cards.index') }}">Cadastre-o!</a></span>
             <br><br> ------
 
             <label for="category_id">Categoria:</label> <select name="category_id" id="category_id"
                 style="text-align: center;">
                 <option value="no_info" selected>Selecione:</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }}>
+                    <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }} title="{{ $category->observation }}">
                         {{ $category->name }}</option>
                 @endforeach
             </select>
             <br><br> -------
-
-            <label for="card_id">Cartão:</label> <select name="card_id" id="card_id" style="text-align: center;">
-                <option value="no_info" selected>Selecione:</option>
-                @foreach ($cards as $card)
-                    <option value="{{ $card->id }}" {{ $card->id == old('card_id') ? 'selected' : '' }}>
-                        {{ $card->bank }}</option>
-                @endforeach
-            </select>
-            <br><br> --------
 
             <input type="submit" value="Criar"> - <a href="{{ route('expenses.index') }}">Listar</a> <x-alert />
 

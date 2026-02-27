@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Card;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCardRequest;
-use App\Http\Requests\UpdateCardRequest;
 use Exception;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class CardController extends Controller
 {
@@ -35,7 +35,8 @@ class CardController extends Controller
         try {
             Card::create([
                 'bank' => $request->bank,
-                'end' => $request->end
+                'end' => $request->end,
+                'user_id' => FacadesAuth::user()->id
             ]);
             return redirect()->route('cards.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
@@ -60,7 +61,7 @@ class CardController extends Controller
             $card->update([
                 'bank' => $request->bank,
                 'end' => $request->end,
-            ]);;
+            ]);
             return redirect()->route('cards.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('cards.index')->with('error', 'Erro: registro não atualizado com sucesso!');

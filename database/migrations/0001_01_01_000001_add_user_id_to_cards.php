@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('expenses', function (Blueprint $table) {
-          $table->foreignId('user_id')
-                ->after('due_date')
+        Schema::table('cards', function (Blueprint $table) {
+            $table->foreignId('user_id')
+                ->after('end')
                 ->constrained('users')
                 ->onUpdate('restrict')
                 ->onDelete('restrict');
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('expenses', function (Blueprint $table) {
+        Schema::table('cards', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
         });
