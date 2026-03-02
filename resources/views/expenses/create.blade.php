@@ -15,11 +15,11 @@
 
             <label for="payment_deadline_id">Prazo para vencimento da despesa:</label> <select name="payment_deadline_id"
                 id="payment_deadline_id" style="text-align: center;">
-                <option value="no_info" selected>Selecione:</option>
+                <option value="" selected>Selecione:</option>
                 @foreach ($payments_deadline as $payment_deadline)
                     <option value="{{ $payment_deadline->id }}"
                         {{ $payment_deadline->id == old('payment_deadline_id') ? 'selected' : '' }}>
-                        {{ $payment_deadline->name == 'SEM PRAZO DE VENCIMENTO' ? $payment_deadline->name : $payment_deadline->name . ' do mês' }}</option>
+                        {{ $payment_deadline->name == 'SEM PRAZO DE VENCIMENTO' ? $payment_deadline->name : $payment_deadline->name }}</option>
                 @endforeach
             </select>
             <br><br> ----
@@ -37,7 +37,7 @@
 
             <label for="payment_method_id">Método de pagamento:</label> <select name="payment_method_id"
                 id="payment_method_id" style="text-align: center;">
-                <option value="no_info" selected>Selecione:</option>
+                <option value="" selected>Selecione:</option>
                 @foreach ($payment_methods as $payment_method)
                     <option value="{{ $payment_method->id }}"
                         {{ $payment_method->id == old('payment_method_id') ? 'selected' : '' }}>
@@ -52,7 +52,7 @@
 
             <label for="category_id">Categoria:</label> <select name="category_id" id="category_id"
                 style="text-align: center;">
-                <option value="no_info" selected>Selecione:</option>
+                <option value="" selected>Selecione:</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }} title="{{ $category->observation }}">
                         {{ $category->name }}</option>

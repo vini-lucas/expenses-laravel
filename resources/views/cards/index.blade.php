@@ -9,6 +9,7 @@
                 <tr>
                     <th>Banco</th>
                     <th>Final</th>
+                    <th>Fatura</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -22,6 +23,9 @@
                             {{ $card->end }}
                         </td>
                         <td>
+                            {{ $card->current_invoice == '' ? '0,00' : $card->current_invoice }}
+                        </td>
+                        <td>
                             <a href="{{ route('cards.edit', ['card' => $card->id]) }}">Editar</a>
                             <form action="{{ route('cards.destroy', ['card' => $card->id]) }}" method="POST"
                                 autocomplete="off">
@@ -30,6 +34,7 @@
                                 <button style="margin-left: 30px;" type="submit"
                                     onclick="return confirm('Confirma a exclusão do registro?')">Excluir</button>
                             </form>
+                            <a href="">Histórico de faturas</a>
                         </td>
                     </tr>
                 </tbody>

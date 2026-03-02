@@ -22,7 +22,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::get(['id', 'name', 'value'])->where('name', '-', 'Crédito');
+        $expenses = Expense::get();
         return view('expenses.index', ['expenses' => $expenses]);
     }
 
@@ -33,7 +33,7 @@ class ExpenseController extends Controller
     {
         $payments_deadline = PaymentDeadline::get(['name', 'id']);
         $installments = Installment::orderBy('id', 'ASC')->get(['name', 'id']);
-        $payment_methods = PaymentMethod::get(['name', 'id']);
+        $payment_methods = PaymentMethod::where('name', '!=', 'Crédito')->get(['name', 'id']);
         $categories = Category::get(['name', 'id', 'observation']);
         $cards = Card::where('user_id', Auth::user()->id)->get();
 
@@ -59,18 +59,17 @@ class ExpenseController extends Controller
                 'payment_deadline_id' => $request->payment_deadline_id,
                 'card_id' => (($request->payment_method_id >= 6) ? ($request->payment_method_id) : (null)),
                 'category_id' => $request->category_id,
-                'payment_method_id' => (($request->payment_method_id <= 6) ? ($request->payment_method_id) : (3)),
+                'payment_method_id' => $request->payment_method_id >= 6 ? 3 : $request->payment_method_id,
                 'installment_id' => $request->installment_id
             ]);
 
             if ($request->payment_method_id >= 6) {
-                $card_up = Card::where('id', $request->payment_method_id);
+                $card_up = Card::where('id', $request->payment_method_id)->first();
                 $card_up->update([
                     'current_invoice' => $card_up->current_invoice + $request->value
                 ]);
             }
-            $id = Expense::orderBy('id', 'DESC')->first();
-            return redirect()->route('expenses.show', ['expense' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
+            return redirect()->route('expenses.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('expenses.index')->with('error', 'Erro: registro não inserido com sucesso!' . $e->getMessage());
         }
@@ -89,7 +88,19 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        return view('expenses.edit', ['expense' => $expense]);
+        $payments_deadline = PaymentDeadline::get(['name', 'id']);
+        $installments = Installment::orderBy('id', 'ASC')->get(['name', 'id']);
+        $payment_methods = PaymentMethod::where('name', '!=', 'Crédito')->get(['name', 'id']);
+        $categories = Category::get(['name', 'id', 'observation']);
+        $cards = Card::where('user_id', Auth::user()->id)->get();
+        return view('expenses.edit', [
+            'expense' => $expense,
+            'payments_deadline' => $payments_deadline,
+            'installments' => $installments,
+            'payment_methods' => $payment_methods,
+            'categories' => $categories,
+            'cards' => $cards
+        ]);
     }
 
     /**
@@ -101,16 +112,17 @@ class ExpenseController extends Controller
             $expense->update([
                 'name' => $request->name,
                 'value' => $request->value,
-                'due_date' => $request->due_date,
+                'user_id' => Auth::user()->id,
                 'payment_deadline_id' => $request->payment_deadline_id,
-                'user_id' => $request->user_id,
+                'card_id' => (($request->payment_method_id >= 6) ? ($request->payment_method_id) : (null)),
                 'category_id' => $request->category_id,
-                'card_id' => $request->card_id
+                'installment_id' => $request->installment_id,
+                'payment_method_id' => $request->payment_method_id >= 6 ? 3 : $request->payment_method_id,
             ]);
             $id = Expense::where('id', $expense->id)->first();
-            return redirect()->route('expenses.show', ['expense' => $id])->with('success', 'Êxito: registro atualizado com sucesso!');
+            return redirect()->route('expenses.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
-            return redirect()->route('expenses.index')->with('error', 'Erro: registro não atualizado com sucesso!');
+            return redirect()->route('expenses.index')->with('error', 'Erro: registro não atualizado com sucesso!' . $e->getMessage());
         }
     }
 

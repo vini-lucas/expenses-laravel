@@ -13,7 +13,9 @@ class Card extends Model
     protected $fillable = [
         'bank',
         'end',
-        'user_id'
+        'user_id',
+        'current_invoice',
+        'invoice_history'
     ];
 
     protected $table = "cards";

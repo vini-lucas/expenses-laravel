@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreExpenseRequest extends FormRequest
+class UpdateExpenseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,8 +21,9 @@ class StoreExpenseRequest extends FormRequest
      */
     public function rules(): array
     {
+        $expenses = $this->route('expense');
         return [
-            'name' => 'required|unique:expenses',
+            'name' => 'required|unique:expenses,name,' . ($expenses->id ? $expenses->id : null),
             'value' => 'required',
             'payment_deadline_id' => 'required',
             'installment_id' => 'required',
@@ -36,7 +37,6 @@ class StoreExpenseRequest extends FormRequest
         return [
             'name.required' => 'Erro: a despesa é obrigatória!',
             'name.unique' => 'Erro: esta despesa já existe!',
-            'value.required' => 'Erro: o valor é obrigatório!',
             'payment_deadline_id.required' => 'Erro: a data de vencimento é obrigatória!',
             'installment_id.required' => 'Erro: o parcelamento é obrigatório!',
             'payment_method_id.required' => 'Erro: o método de pagamento é obrigatório!',

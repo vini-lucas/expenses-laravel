@@ -22,13 +22,13 @@
                             {{ $expense->value }}
                         </td>
                         <td>
-                            <a href="{{ route('expenses.show', ['expense' => $expense->id]) }}">Vizualizar</a> - <a
-                                href="{{ route('expenses.edit', ['expense' => $expense->id]) }}">Editar</a>
+                            <a href="{{ route('expenses.edit', ['expense' => $expense->id]) }}">Editar</a>
                             <form action="{{ route('expenses.destroy', ['expense' => $expense->id]) }}" method="POST"
                                 autocomplete="off">
                                 @csrf
                                 @method('DELETE')
-                                <button style="margin-left: 30px;" type="submit" onclick="return confirm('Confirma a exclusão do registro?')">Excluir</button>
+                                <button style="margin-left: 30px;" type="submit"
+                                    onclick="return confirm('Confirma a exclusão do registro?')">Excluir</button>
                             </form>
                         </td>
                     </tr>
@@ -41,5 +41,4 @@
 
         <a href="{{ route('expenses.create') }}">Criar</a> <x-alert />
     </div>
-
 @endsection
