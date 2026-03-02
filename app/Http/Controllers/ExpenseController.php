@@ -22,7 +22,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::get(['id', 'name', 'value']);
+        $expenses = Expense::get(['id', 'name', 'value'])->where('name', '-', 'Crédito');
         return view('expenses.index', ['expenses' => $expenses]);
     }
 
