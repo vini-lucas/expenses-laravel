@@ -68,6 +68,15 @@ class ExpenseController extends Controller
                 $card_up->update([
                     'current_invoice' => $card_up->current_invoice + $request->value
                 ]);
+                $history = $card_up->invoice_history;
+
+                $history[] = [
+                    $request->name => $request->value
+                ];
+
+                $card_up->invoice_history = $history;
+
+                $card_up->save();
             }
             return redirect()->route('expenses.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {

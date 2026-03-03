@@ -19,7 +19,8 @@
                 @foreach ($payments_deadline as $payment_deadline)
                     <option value="{{ $payment_deadline->id }}"
                         {{ $payment_deadline->id == $expense->payment_deadline_id ? 'selected' : '' }}>
-                        {{ $payment_deadline->name == 'SEM PRAZO DE VENCIMENTO' ? $payment_deadline->name : $payment_deadline->name }}</option>
+                        {{ $payment_deadline->name == 'SEM PRAZO DE VENCIMENTO' ? $payment_deadline->name : $payment_deadline->name }}
+                    </option>
                 @endforeach
             </select>
             <br><br> ----
@@ -45,7 +46,8 @@
                 @endforeach
                 @foreach ($cards as $card)
                     <option value="{{ $card->id }}"
-                        {{ $card->id == $expense->payment_method_id ? 'selected' : '' }}>Crédito {{ '(' . $card->bank . ')' }} - final {{ $card->end }}</option>
+                        {{ $expense->payment_method_id == 3 ? ($expense->card_id == $card->id ? 'selected' : '') : '' }}>
+                        Crédito {{ '(' . $card->bank . ')' }} - final {{ $card->end }}</option>
                 @endforeach
             </select>
             <br><br> ------
@@ -54,7 +56,8 @@
                 style="text-align: center;">
                 <option value="" selected>Selecione:</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ $category->id == $expense->category_id ? 'selected' : '' }} title="{{ $category->observation }}">
+                    <option value="{{ $category->id }}" {{ $category->id == $expense->category_id ? 'selected' : '' }}
+                        title="{{ $category->observation }}">
                         {{ $category->name }}</option>
                 @endforeach
             </select>

@@ -20,6 +20,10 @@ class Card extends Model
 
     protected $table = "cards";
 
+    protected $casts = [
+    'invoice_history' => 'array'
+];
+
     public function expenses()
     {
         return $this->hasMany(Expense::class);

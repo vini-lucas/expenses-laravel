@@ -5,6 +5,7 @@
         @break
     @endforeach
 </span>
+|
 @endif
 
 @if (session('success'))
@@ -12,6 +13,7 @@
 <span style="color: green;">
     {{ session('success') }}
 </span>
+|
 @endif
 
 @if (session('error'))
@@ -19,4 +21,5 @@
 <span style="color: #f00;">
     {{ session('error') }}
 </span>
+|
 @endif
