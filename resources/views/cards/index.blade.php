@@ -34,10 +34,24 @@
                                 <button style="margin-left: 30px;" type="submit"
                                     onclick="return confirm('Confirma a exclusão do registro?')">Excluir</button>
                             </form>
-                            <a href="">Histórico de faturas</a>
+                            <button type="button" onclick="openModal({{ $card->id }})">Resumo da fatura (atual)</button>
                         </td>
                     </tr>
                 </tbody>
+
+                <div id="invoiceSummary-{{ $card->id }}" style="display: none;">
+
+                    @foreach ($card->invoice_history as $a)
+                        @foreach ($a as $b => $c)
+                            <span>Despesa: {{ ucfirst($b) }} - Valor: {{ $c }} </span>-----|------ 
+                            
+                        @endforeach
+                        <br>
+                    @endforeach
+                    <button type="button" id="buttonInvoiceSummary-{{ $card->id }}"
+                        onclick="closeModal({{ $card->id }})">Fechar</button>
+                    
+                </div>
             @empty
                 <span style="color: red">0 registos encontrados!</span>
             @endforelse
@@ -46,4 +60,18 @@
 
         <a href="{{ route('cards.create') }}">Criar</a> <x-alert />
     </div>
+
+    <script>
+        function openModal(id) {
+            if (document.getElementById('invoiceSummary-' + id).style.display == "none") {
+                document.getElementById('invoiceSummary-' + id).style.display = "flex";
+            } else {
+                document.getElementById('invoiceSummary-' + id).style.display = "none";
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById('invoiceSummary-' + id).style.display = "none";
+        }
+    </script>
 @endsection
