@@ -60,7 +60,11 @@ class ExpenseController extends Controller
                 'card_id' => (($request->payment_method_id >= 6) ? ($request->payment_method_id) : (null)),
                 'category_id' => $request->category_id,
                 'payment_method_id' => $request->payment_method_id >= 6 ? 3 : $request->payment_method_id,
-                'installment_id' => $request->installment_id
+                'installment_id' => $request->installment_id,
+                'start_date' => $request->installment_id != 1 ? now() : null,
+                'end_date' => $request->installment_id != 1
+                    ? now()->addMonths((int) $request->installment_id)
+                    : null
             ]);
 
             if ($request->payment_method_id >= 6) {
@@ -69,15 +73,13 @@ class ExpenseController extends Controller
                     'current_invoice' => $card_up->current_invoice + $request->value
                 ]);
                 $history = $card_up->invoice_history;
-
                 $history[] = [
                     $request->name => $request->value
                 ];
-
                 $card_up->invoice_history = $history;
-
                 $card_up->save();
             }
+
             return redirect()->route('expenses.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
             return redirect()->route('expenses.index')->with('error', 'Erro: registro não inserido com sucesso!' . $e->getMessage());

@@ -18,7 +18,9 @@ class Expense extends Model
         'user_id',
         'card_id',
         'category_id',
-        'installment_id'
+        'installment_id',
+        'start_date',
+        'end_date'
     ];
 
     protected $table = "expenses";

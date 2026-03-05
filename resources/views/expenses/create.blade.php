@@ -11,7 +11,7 @@
                 style="text-align: center;"><br><br> --
 
             <input type="text" name="value" id="value" value="{{ old('value') }}" placeholder="Ex.: R$100,00"
-                style="text-align: center;"><br><br> ---
+                style="text-align: center;" title="Se for parcelado informe o valor da parcela."><br><br> ---
 
             <label for="payment_deadline_id">Prazo para vencimento da despesa:</label> <select name="payment_deadline_id"
                 id="payment_deadline_id" style="text-align: center;">

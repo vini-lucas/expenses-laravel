@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Expense;
 use Illuminate\Console\Command;
 
 class checkInvoiceTurn extends Command
@@ -25,6 +26,15 @@ class checkInvoiceTurn extends Command
      */
     public function handle()
     {
-        if ()
+        if (date("d") == 1) {
+            Expense::where('category_id', '!=', 2)->delete();
+        }
+
+        $parcelados = Expense::where('installment_id', '!=', 1)->get();
+        foreach ($parcelados as $parcelado) {
+            if (date('m', $parcelado->end_date) >= date('m')) {
+                $parcelado->delete();
+            }
+        }
     }
 }

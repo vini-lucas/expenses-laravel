@@ -41,7 +41,7 @@
 
                 <div id="invoiceSummary-{{ $card->id }}" style="display: none;">
 
-                    @foreach ($card->invoice_history as $a)
+                    @foreach ($card->invoice_history ?? [] as $a)
                         @foreach ($a as $b => $c)
                             <span>Despesa: {{ ucfirst($b) }} - Valor: {{ $c }} </span>-----|------ 
                             
