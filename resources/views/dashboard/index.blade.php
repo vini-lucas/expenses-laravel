@@ -9,16 +9,8 @@
         @empty
             <span>Não há despesas (débitos) cadastradas!</span><br>
         @endforelse
-        <span>Total = {{ $total_debito }}</span>
-        <hr>
-
-        <h4>Pré-vizualização da próxima fatura:</h4>
-        @forelse ($faturas_que_vem as $fatura_que_vem)
-            <span>{{ $fatura_que_vem->name }} = {{ $fatura_que_vem->value }}</span><br>
-        @empty
-            <span>Não há faturas no cartão programadas para o próximo mês!</span><br>
-        @endforelse
-        <span>Total: {{ $total_faturas_que_vem }}</span>
+        <span>Fatura deste mês = {{ $total_faturas_so_deste_mes }}</span><br>
+        <span><strong>Total = {{ $total_debito }}</strong></span>
         <hr>
 
         <h4>Fatura atual:</h4>
@@ -27,7 +19,16 @@
         @empty
             <span>Não há dívidas na fatura de seu cartão programadas para este mês!</span><br>
         @endforelse
-        <span>Total: {{ $total_faturas_so_deste_mes }}</span>
+        <span><strong>Total = {{ $total_faturas_so_deste_mes }}</strong></span>
+        <hr>
+
+        <h4>Pré-vizualização da próxima fatura:</h4>
+        @forelse ($faturas_que_vem as $fatura_que_vem)
+            <span>{{ $fatura_que_vem->name }} = {{ $fatura_que_vem->value }}</span><br>
+        @empty
+            <span>Não há faturas no cartão programadas para o próximo mês!</span><br>
+        @endforelse
+        <span><strong>Total = {{ $total_faturas_que_vem }}</strong></span>
         <hr>
 
         <x-alert />

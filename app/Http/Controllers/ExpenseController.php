@@ -59,9 +59,9 @@ class ExpenseController extends Controller
                 'payment_deadline_id' => $request->payment_deadline_id,
                 'card_id' => (($request->payment_method_id >= 6) ? ($request->payment_method_id) : (null)),
                 'category_id' => $request->category_id,
-                'payment_method_id' => $request->payment_method_id >= 6 ? 3 : $request->payment_method_id,
                 'installment_id' => $request->installment_id,
-                'start_date' => $request->installment_id != 1 ? now() : null,
+                'start_date' => ($request->installment_id != 1 && $request->payment_method_id >= 6) ? now() : null,
+                'payment_method_id' => $request->payment_method_id >= 6 ? 3 : $request->payment_method_id,
                 'end_date' => $request->installment_id != 1
                     ? now()->addMonths((int) $request->installment_id)
                     : null

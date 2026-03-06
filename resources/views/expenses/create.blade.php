@@ -75,11 +75,9 @@
 
             if (paymentMethod != 2 && paymentMethod <= 5) {
                 installment.value = "1";
-                installment.disabled = true;
             } else {
-                installment.disabled = false;
+                installment.selectedIndex  = "Selecione:";
             }
-
         });
     </script>
 @endsection
