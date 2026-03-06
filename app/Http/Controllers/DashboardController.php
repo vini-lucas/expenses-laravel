@@ -13,7 +13,6 @@ class DashboardController extends Controller
 
         $debitos = Expense::where('payment_method_id', '!=', 3)->where('payment_method_id', '!=', 2)->get();
         $faturas_que_vem = Expense::where('end_date', '>=', now()->addMonths(1))->get();
-        //$faturas_so_deste_mes = Expense::where('end_date', '<=', now())->get();
         $faturas_so_deste_mes = Expense::where('payment_method_id', 3)->get();
 
         $total_debito = 0;
@@ -31,17 +30,8 @@ class DashboardController extends Controller
         foreach ($faturas_so_deste_mes as $fatura_so_deste_mes) {
             $total_faturas_so_deste_mes += $fatura_so_deste_mes->value;
         }
-        
-        $total_debito += $total_faturas_so_deste_mes;
 
-        /*$parcelados = Expense::where('end_date', '>=', date('m'))->get();
-        $fixas = Expense::where('category_id', 2)->get();
-        foreach ($parcelados as $parcelado) {
-            $total_proxima += $parcelado->value;
-        }
-        foreach ($fixas as $fixa) {
-            $total_proxima += $fixa->value;
-        }*/
+        $total_debito += $total_faturas_so_deste_mes;
 
         return view('dashboard.index', [
             'name' => $name,
@@ -49,10 +39,8 @@ class DashboardController extends Controller
             'total_debito' => $total_debito,
             'faturas_que_vem' => $faturas_que_vem,
             'faturas_so_deste_mes' => $faturas_so_deste_mes,
-            //'parcelados' => $parcelados,
-            //'fixas' => $fixas,
             'total_faturas_que_vem' => $total_faturas_que_vem,
             'total_faturas_so_deste_mes' => $total_faturas_so_deste_mes
-            ]);
+        ]);
     }
 }
