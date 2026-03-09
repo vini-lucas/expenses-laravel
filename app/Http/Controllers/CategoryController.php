@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -36,6 +37,7 @@ class CategoryController extends Controller
             ]);
             return redirect()->route('categories.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('categories.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }
@@ -60,6 +62,7 @@ class CategoryController extends Controller
             ]);
             return redirect()->route('categories.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não editado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('categories.index')->with('error', 'Erro: registro não atualizado com sucesso!');
         }
     }
@@ -73,6 +76,7 @@ class CategoryController extends Controller
             $category->delete();
             return redirect()->route('categories.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não excluído com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('categories.index')->with('error', 'Erro: registro não excluído com sucesso!');
         }
     }

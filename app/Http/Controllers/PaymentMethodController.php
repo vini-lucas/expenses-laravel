@@ -6,6 +6,7 @@ use App\Models\PaymentMethod;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePaymentMethodRequest;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class PaymentMethodController extends Controller
 {
@@ -37,6 +38,7 @@ class PaymentMethodController extends Controller
             ]);
             return redirect()->route('payment_methods.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('payment_methods.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }
@@ -60,6 +62,7 @@ class PaymentMethodController extends Controller
             ]);
             return redirect()->route('payment_methods.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não editado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('payment_methods.index')->with('error', 'Erro: registro não atualizado com sucesso!');
         }
     }
@@ -73,6 +76,7 @@ class PaymentMethodController extends Controller
             $payment_method->delete();
             return redirect()->route('payment_methods.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não excluído com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('payment_methods.index')->with('error', 'Erro: registro não excluído com sucesso!');
         }
     }

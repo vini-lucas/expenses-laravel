@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCardRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Log;
 
 class CardController extends Controller
 {
@@ -40,6 +41,7 @@ class CardController extends Controller
             ]);
             return redirect()->route('cards.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('cards.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }
@@ -64,6 +66,7 @@ class CardController extends Controller
             ]);
             return redirect()->route('cards.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não editado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('cards.index')->with('error', 'Erro: registro não atualizado com sucesso!');
         }
     }
@@ -77,6 +80,7 @@ class CardController extends Controller
             $card->delete();
             return redirect()->route('cards.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não excluído com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('cards.index')->with('error', 'Erro: registro não excluído com sucesso!');
         }
     }

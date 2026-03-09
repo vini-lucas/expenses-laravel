@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -42,6 +43,7 @@ class LoginController extends Controller
                 return redirect()->route('dashboard')->with('success', 'Bem-vindo de volta!');
             }
         } catch (Exception $e) {;
+        Log::notice('Login não realizado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->back()->withInput()->with('error', 'CPF e/ou senha incorretos!');
         }
     }
@@ -81,6 +83,7 @@ class LoginController extends Controller
             ]);
             return redirect()->route('login')->with('success', 'Êxito: registro inserido com sucesso, realize o login!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('login')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }

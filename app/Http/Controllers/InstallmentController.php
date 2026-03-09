@@ -8,6 +8,7 @@ use App\Http\Requests\StoreInstallmentRequest;
 use App\Http\Requests\UpdateInstallmentRequest;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InstallmentController extends Controller
 {
@@ -48,6 +49,7 @@ class InstallmentController extends Controller
             ]);
             return redirect()->route('installments.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('installments.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }
@@ -79,6 +81,7 @@ class InstallmentController extends Controller
             ]);
             return redirect()->route('installments.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não editado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('installments.index')->with('error', 'Erro: registro não atualizado com sucesso!');
         }
     }
@@ -92,6 +95,7 @@ class InstallmentController extends Controller
             $installment->delete();
             return redirect()->route('installments.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não excluído com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('installments.index')->with('error', 'Erro: registro não excluído com sucesso!');
         }
     }

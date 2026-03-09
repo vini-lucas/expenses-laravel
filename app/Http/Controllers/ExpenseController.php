@@ -14,6 +14,7 @@ use App\Models\PaymentMethod;
 use App\Models\Category;
 use App\Models\Card;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ExpenseController extends Controller
 {
@@ -82,7 +83,8 @@ class ExpenseController extends Controller
 
             return redirect()->route('expenses.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
-            return redirect()->route('expenses.index')->with('error', 'Erro: registro não inserido com sucesso!' . $e->getMessage());
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
+            return redirect()->route('expenses.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }
 
@@ -130,9 +132,9 @@ class ExpenseController extends Controller
                 'installment_id' => $request->installment_id,
                 'payment_method_id' => $request->payment_method_id >= 6 ? 3 : $request->payment_method_id,
             ]);
-            $id = Expense::where('id', $expense->id)->first();
             return redirect()->route('expenses.index')->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('expenses.index')->with('error', 'Erro: registro não atualizado com sucesso!' . $e->getMessage());
         }
     }
@@ -146,6 +148,7 @@ class ExpenseController extends Controller
             $expense->delete();
             return redirect()->route('expenses.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não excluído com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('expenses.index')->with('error', 'Erro: registro não excluído com sucesso!');
         }
     }

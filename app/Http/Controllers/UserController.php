@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -43,6 +44,7 @@ class UserController extends Controller
             $id = User::where('cpf', $request->cpf)->first();
             return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('users.index')->with('error', 'Erro: registro não inserido com sucesso!');
         }
     }
@@ -78,6 +80,7 @@ class UserController extends Controller
             $id = User::where('cpf', $request->cpf)->first();
             return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não editado com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('users.index')->with('error', 'Erro: registro não atualizado com sucesso!');
         }
     }
@@ -91,6 +94,7 @@ class UserController extends Controller
             $user->delete();
             return redirect()->route('users.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
+            Log::notice('Registro não excluído com sucesso.', ['exception' => $e->getMessage()]);
             return redirect()->route('users.index')->with('error', 'Erro: registro não excluído com sucesso!');
         }
     }
