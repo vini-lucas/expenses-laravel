@@ -20,19 +20,26 @@ class ExpenseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:index-installments')->only('index');
-        $this->middleware('permission:show-installments')->only('show');
-        $this->middleware('permission:create-installments')->only(['create', 'store']);
-        $this->middleware('permission:update-installments')->only(['edit', 'update']);
-        $this->middleware('permission:destroy-installments')->only('destroy');
+        $this->middleware('permission:index-expenses')->only('index');
+        $this->middleware('permission:show-expenses')->only('show');
+        $this->middleware('permission:create-expenses')->only(['create', 'store']);
+        $this->middleware('permission:update-expenses')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-expenses')->only('destroy');
     }
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $expenses = Expense::get();
+        $user = Auth::user();
+
+        if ($user->hasRole('Super Admin')) {
+            $expenses = Expense::all();
+        } else {
+            $expenses = Expense::where('user_id', $user->id)->get();
+        }
+
         return view('expenses.index', ['expenses' => $expenses]);
     }
 

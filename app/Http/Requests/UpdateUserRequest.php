@@ -27,7 +27,8 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required',
             'cpf' => 'required|digits:11|unique:users,cpf,' . ($user ? $user->id : null),
             'email' => 'required|email|unique:users,email,' . ($user ? $user->id : null),
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'paper' => 'required'
         ];
     }
 
@@ -42,7 +43,8 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Erro: e-mail inválido!',
             'email.unique' => 'Erro: já existe um registro com este e-mail!',
             'password.min' => 'Erro: a senha precisa possuir ao mínimo 6 caracteres!',
-            'cpf.digits' => 'Erro: CPF inválido!'
+            'cpf.digits' => 'Erro: CPF inválido!',
+            'paper.required' => 'Erro: informe o nível de acesso!'
         ];
     }
 }

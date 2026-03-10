@@ -6,8 +6,8 @@ use App\Models\Card;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCardRequest;
 use Exception;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class CardController extends Controller
 {
@@ -25,7 +25,13 @@ class CardController extends Controller
      */
     public function index()
     {
-        $cards = Card::get();
+        $user = Auth::user();
+        if ($user->hasRole('Super Admin')) {
+            $cards = Card::get();
+        } else {
+            $cards = Card::where('user_id', $user->id)->get();
+        }
+        
         return view('cards.index', ['cards' => $cards]);
     }
 
@@ -46,7 +52,7 @@ class CardController extends Controller
             Card::create([
                 'bank' => $request->bank,
                 'end' => $request->end,
-                'user_id' => FacadesAuth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             return redirect()->route('cards.index')->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {

@@ -75,12 +75,13 @@ class LoginController extends Controller
             ]
         );
         try {
-            User::create([
+            $user = User::create([
                 'name' => $request->name,
                 'cpf' => $request->cpf,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
+            $user->assignRole('Usuário');
             return redirect()->route('login')->with('success', 'Êxito: registro inserido com sucesso, realize o login!');
         } catch (Exception $e) {
             Log::notice('Registro não cadastrado com sucesso.', ['exception' => $e->getMessage()]);

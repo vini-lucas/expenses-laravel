@@ -40,7 +40,7 @@ class StoreExpenseRequest extends FormRequest
             'payment_deadline_id.required' => 'Erro: a data de vencimento é obrigatória!',
             'installment_id.required' => 'Erro: o parcelamento é obrigatório!',
             'payment_method_id.required' => 'Erro: o método de pagamento é obrigatório!',
-            'category_id.required' => 'Erro: a categoria é obrigatória!'
+            'category_id.required' => 'Erro: a categoria é obrigatória!',
         ];
     }
 }

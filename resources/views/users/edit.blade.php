@@ -7,11 +7,19 @@
             @csrf
             @method('PUT') - 
 
-            <input type="text" name="name" id="name" value="{{ $user->name }}" placeholder="Ex.: Lucas Vinicius" style="text-align: center;"><br><br> -- 
+            <select name="paper" id="paper">
+                <option value="">Selecione:</option>
+                @foreach ($papers as $paper)
+                    <option value="{{ $paper->id }}" {{ $user->getRoleNames()[0] == $paper->name ? 'selected' : ''}}>{{ $paper->name }}</option>
+                @endforeach
+                
+            </select><br><br> --
 
-            <input type="text" name="cpf" id="cpf" value="{{ $user->cpf }}" placeholder="XXX.XXX.XXX-XX" style="text-align: center;"><br><br> ---
+            <input type="text" name="name" id="name" value="{{ $user->name }}" placeholder="Ex.: Lucas Vinicius" style="text-align: center;"><br><br> ---
 
-            <input type="email" name="email" id="email" value="{{ $user->email }}" placeholder="exemplo@dominio.extensão" style="text-align: center;"><br><br> ----
+            <input type="text" name="cpf" id="cpf" value="{{ $user->cpf }}" placeholder="XXX.XXX.XXX-XX" style="text-align: center;"><br><br> ----
+
+            <input type="email" name="email" id="email" value="{{ $user->email }}" placeholder="exemplo@dominio.extensão" style="text-align: center;"><br><br> -----
 
             <input type="password" name="password" id="password" placeholder="***************" style="text-align: center;"><br><br>
 

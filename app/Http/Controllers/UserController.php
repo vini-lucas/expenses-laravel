@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -34,7 +35,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $papers = Role::all();
+        return view('users.create', ['papers' => $papers]);
     }
 
     /**
@@ -49,7 +51,11 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
-            $user->assignRole('Usuário');
+            $papeis = [
+                1 => 'Super Admin',
+                2 => 'Usuário'
+            ];
+            $user->assignRole($papeis[$request->paper]);
             $id = User::where('cpf', $request->cpf)->first();
             return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {
@@ -71,7 +77,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', ['user' => $user]);
+        $papers = Role::all();
+        return view('users.edit', ['user' => $user, 'papers' => $papers]);
     }
 
     /**
@@ -86,6 +93,11 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
+            $papeis = [
+                1 => 'Super Admin',
+                2 => 'Usuário'
+            ];
+            $user->syncRoles($papeis[$request->paper]);
             $id = User::where('cpf', $request->cpf)->first();
             return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro atualizado com sucesso!');
         } catch (Exception $e) {
@@ -100,6 +112,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try {
+            $user->removeRole($user->getRoleNames()[0]);
             $user->delete();
             return redirect()->route('users.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {
