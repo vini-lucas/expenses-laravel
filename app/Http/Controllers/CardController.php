@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Log;
 
 class CardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:index-cards')->only('index');
+        $this->middleware('permission:show-cards')->only('show');
+        $this->middleware('permission:create-cards')->only(['create', 'store']);
+        $this->middleware('permission:update-cards')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-cards')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:index-users')->only('index');
+        $this->middleware('permission:show-users')->only('show');
+        $this->middleware('permission:create-users')->only(['create', 'store']);
+        $this->middleware('permission:update-users')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-users')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,12 +43,13 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         try {
-            User::create([
+            $user = User::create([
                 'name' => $request->name,
                 'cpf' => $request->cpf,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
+            $user->assignRole('Usuário');
             $id = User::where('cpf', $request->cpf)->first();
             return redirect()->route('users.show', ['user' => $id])->with('success', 'Êxito: registro inserido com sucesso!');
         } catch (Exception $e) {

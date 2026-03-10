@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentDeadlineController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:index-payments_deadline')->only('index');
+        $this->middleware('permission:show-payments_deadline')->only('show');
+        $this->middleware('permission:create-payments_deadline')->only(['create', 'store']);
+        $this->middleware('permission:update-payments_deadline')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-payments_deadline')->only('destroy');
+    }
+
     public function index()
     {
         $payments_deadline = PaymentDeadline::get();

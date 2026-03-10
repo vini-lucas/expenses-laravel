@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:index-categories')->only('index');
+        $this->middleware('permission:show-categories')->only('show');
+        $this->middleware('permission:create-categories')->only(['create', 'store']);
+        $this->middleware('permission:update-categories')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-categories')->only('destroy');
+    }
+
     public function index()
     {
         $categories = Category::get();

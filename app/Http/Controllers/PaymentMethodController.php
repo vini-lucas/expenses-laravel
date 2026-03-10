@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentMethodController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:index-payment_methods')->only('index');
+        $this->middleware('permission:show-payment_methods')->only('show');
+        $this->middleware('permission:create-payment_methods')->only(['create', 'store']);
+        $this->middleware('permission:update-payment_methods')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-payment_methods')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

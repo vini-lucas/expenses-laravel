@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Log;
 
 class InstallmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:index-installments')->only('index');
+        $this->middleware('permission:show-installments')->only('show');
+        $this->middleware('permission:create-installments')->only(['create', 'store']);
+        $this->middleware('permission:update-installments')->only(['edit', 'update']);
+        $this->middleware('permission:destroy-installments')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

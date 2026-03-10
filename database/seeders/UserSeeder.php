@@ -13,11 +13,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate([
+        $superAdmin = User::firstOrCreate([
             'name' => 'Lucas',
             'cpf' => '12428432990',
             'email' => 'lucas@gmail.com',
             'password' => Hash::make('123456')
         ]);
+        $superAdmin->assignRole('Super Admin');
     }
 }

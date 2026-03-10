@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
-    public function popularBank(string $seeder = "")
+    public function popularBank(string $seeder = ""): array
     {
         return [
             'index-' . $seeder,
@@ -19,18 +19,17 @@ class PermissionSeeder extends Seeder
         ];
     }
 
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $permissions = $this->popularBank('users');
+        $models = ['users', 'expenses', 'cards', 'categories', 'installments', 'payments_deadline', 'payment_methods'];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(
-                ['name' => $permission],
-                ['guard_name' => 'web']
-            );
+        foreach ($models as $model) {
+            foreach ($this->popularBank($model) as $permission) {
+                Permission::firstOrCreate([
+                    'name' => $permission,
+                    'guard_name' => 'web'
+                ]);
+            }
         }
     }
 }
