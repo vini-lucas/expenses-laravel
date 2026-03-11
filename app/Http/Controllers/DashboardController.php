@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $name = FacadesAuth::user()->name;
 
-        $debitos = Expense::whereIn('payment_method_id', '!=', [3, 2])
+        $debitos = Expense::whereNotIn('payment_method_id', [3, 2])
             ->where('user_id', FacadesAuth::id())
             ->get();
 
@@ -32,8 +32,18 @@ class DashboardController extends Controller
 
         $debitos_mes_que_vem = Expense::where('user_id', FacadesAuth::id())
             ->whereIn('category_id', [1, 2])
-            ->where('payment_method_id', '!=', 3)
+            ->whereNotIn('payment_method_id', [2, 3])
+            ->orWhere(function ($q) {
+                $q->where('end_date', '>=', now()->addMonths(1))
+                    ->whereNotIn('payment_method_id', [2, 3])
+                    ->where('user_id', FacadesAuth::id());
+            })
             ->get();
+
+        $lembretes = Expense::whereBetween('payment_deadline_id', [
+            now()->day,
+            now()->addDays(6)->day
+        ])->get();
 
         $total_debito = 0;
         $total_faturas_que_vem = 0;
@@ -58,6 +68,8 @@ class DashboardController extends Controller
 
         $total_debito += $total_faturas_so_deste_mes;
         $total_debitos_mes_que_vem += $total_faturas_que_vem;
+
+        dd($lembretes);
 
         return view('dashboard.index', [
             'name' => $name,
