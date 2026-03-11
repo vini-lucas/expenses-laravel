@@ -13,6 +13,17 @@
             <input type="text" name="value" id="value" value="{{ old('value') }}" placeholder="Ex.: R$100,00"
                 style="text-align: center;" title="Se for parcelado informe o valor da parcela."><br><br> ---
 
+            <label for="category_id">Categoria:</label> <select name="category_id" id="category_id"
+                style="text-align: center;">
+                <option value="" selected>Selecione:</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }}
+                        title="{{ $category->observation }}">
+                        {{ $category->name }}</option>
+                @endforeach
+            </select>
+            <br><br> ----
+
             <label for="payment_deadline_id">Prazo para vencimento da despesa:</label> <select name="payment_deadline_id"
                 id="payment_deadline_id" style="text-align: center;">
                 <option value="" selected>Selecione:</option>
@@ -20,17 +31,6 @@
                     <option value="{{ $payment_deadline->id }}"
                         {{ $payment_deadline->id == old('payment_deadline_id') ? 'selected' : '' }}>
                         {{ $payment_deadline->name == 'SEM PRAZO DE VENCIMENTO' ? $payment_deadline->name : $payment_deadline->name }}
-                    </option>
-                @endforeach
-            </select>
-            <br><br> ----
-
-            <label for="installment_id">Parcelamento:</label> <select name="installment_id" id="installment_id"
-                style="text-align: center;">
-                <option value="no_info" selected>Selecione:</option>
-                @foreach ($installments as $installment)
-                    <option value="{{ $installment->id }}"
-                        {{ $installment->id == old('installment_id') ? 'selected' : '' }}>{{ $installment->name }}
                     </option>
                 @endforeach
             </select>
@@ -51,16 +51,16 @@
             </select> - <span>Seu cartão não está aqui? <a href="{{ route('cards.index') }}">Cadastre-o!</a></span>
             <br><br> ------
 
-            <label for="category_id">Categoria:</label> <select name="category_id" id="category_id"
+            <label for="installment_id">Parcelamento:</label> <select name="installment_id" id="installment_id"
                 style="text-align: center;">
-                <option value="" selected>Selecione:</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }}
-                        title="{{ $category->observation }}">
-                        {{ $category->name }}</option>
+                <option value="no_info" selected>Selecione:</option>
+                @foreach ($installments as $installment)
+                    <option value="{{ $installment->id }}"
+                        {{ $installment->id == old('installment_id') ? 'selected' : '' }}>{{ $installment->name }}
+                    </option>
                 @endforeach
             </select>
-            <br><br> -------
+            <br><br>
 
             <input type="submit" value="Criar"> - <a href="{{ route('expenses.index') }}">Listar</a> <x-alert />
 
@@ -76,7 +76,7 @@
             if (paymentMethod != 2 && paymentMethod <= 5) {
                 installment.value = "1";
             } else {
-                installment.selectedIndex  = "Selecione:";
+                installment.selectedIndex = "Selecione:";
             }
         });
     </script>

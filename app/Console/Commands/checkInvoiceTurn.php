@@ -27,7 +27,9 @@ class checkInvoiceTurn extends Command
     public function handle()
     {
         if (date("d") == 1) {
-            Expense::where('category_id', '!=', 2)->delete();
+            Expense::whereIn('category_id', '!=', [1,2])
+            ->where('installment_id', 1)
+            ->delete();
         }
 
         $parcelados = Expense::where('installment_id', '!=', 1)->get();

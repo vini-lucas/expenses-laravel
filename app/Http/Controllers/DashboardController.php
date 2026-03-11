@@ -11,10 +11,26 @@ class DashboardController extends Controller
     {
         $name = FacadesAuth::user()->name;
 
-        $debitos = Expense::where('payment_method_id', '!=', 3)->where('payment_method_id', '!=', 2)->where('user_id', FacadesAuth::id())->get();
-        $faturas_que_vem = Expense::where('end_date', '>=', now()->addMonths(1))->where('user_id', FacadesAuth::id())->orWhere('category_id', 1)->orWhere('category_id', 2)->where('end_date', '>=', now()->addMonths(1))->where('user_id', FacadesAuth::id())->get();
-        $faturas_so_deste_mes = Expense::where('payment_method_id', 3)->where('user_id', FacadesAuth::id())->get();
-        $debitos_mes_que_vem = Expense::where('category_id', 1)->where('payment_method_id', '!=', 3)->orWhere('category_id', 2)->get();
+        $debitos = Expense::where('payment_method_id', '!=', 3)
+            ->where('payment_method_id', '!=', 2)
+            ->where('user_id', FacadesAuth::id())
+            ->get();
+
+        $faturas_que_vem = Expense::where('user_id', FacadesAuth::id())
+            ->where(function ($q) {
+                $q->where('end_date', '>=', now()->addMonths(1))
+                    ->orWhereIn('category_id', [1, 2]);
+            })
+            ->get();
+
+        $faturas_so_deste_mes = Expense::where('user_id', FacadesAuth::id())
+            ->whereIn('payment_method_id', [3, 2])
+            ->get();
+
+        $debitos_mes_que_vem = Expense::where('user_id', FacadesAuth::id())
+            ->whereIn('category_id', [1,2])
+            ->where('payment_method_id', '!=', 3)
+            ->get();
 
         $total_debito = 0;
         $total_faturas_que_vem = 0;
@@ -38,6 +54,7 @@ class DashboardController extends Controller
         }
 
         $total_debito += $total_faturas_so_deste_mes;
+        $total_debitos_mes_que_vem += $total_faturas_que_vem;
 
         return view('dashboard.index', [
             'name' => $name,
@@ -48,7 +65,7 @@ class DashboardController extends Controller
             'total_faturas_que_vem' => $total_faturas_que_vem,
             'total_faturas_so_deste_mes' => $total_faturas_so_deste_mes,
             'total_debitos_mes_que_vem' => $total_debitos_mes_que_vem,
-            'debitos_mes_que_vem' => $debitos_mes_que_vem
+            'debitos_mes_que_vem' => $debitos_mes_que_vem,
         ]);
     }
 }

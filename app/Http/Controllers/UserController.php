@@ -112,7 +112,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try {
-            $user->removeRole($user->getRoleNames()[0]);
             $user->delete();
             return redirect()->route('users.index')->with('success', 'Êxito: registro excluído com sucesso!');
         } catch (Exception $e) {

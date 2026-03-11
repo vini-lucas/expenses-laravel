@@ -13,11 +13,11 @@
         <span><strong>Total = {{ $total_debito }}</strong></span>
         <hr>
 
-        <h4>Fatura (cartão de crédito) atual:</h4>
+        <h4>Fatura (cartão de crédito) atual (e, se possuir, boletos em aberto):</h4>
         @forelse ($faturas_so_deste_mes as $fatura_so_deste_mes)
             <span>{{ $fatura_so_deste_mes->name }} = {{ $fatura_so_deste_mes->value }}</span><br>
         @empty
-            <span>Não há dívidas na fatura de seu cartão programadas para este mês!</span><br>
+            <span>Não há dívidas na fatura de seu cartão deste mês!</span><br>
         @endforelse
         <span><strong>Total = {{ $total_faturas_so_deste_mes }}</strong></span>
         <hr>
