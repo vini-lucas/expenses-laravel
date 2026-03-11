@@ -11,15 +11,18 @@ class DashboardController extends Controller
     {
         $name = FacadesAuth::user()->name;
 
-        $debitos = Expense::where('payment_method_id', '!=', 3)
-            ->where('payment_method_id', '!=', 2)
+        $debitos = Expense::whereIn('payment_method_id', '!=', [3, 2])
             ->where('user_id', FacadesAuth::id())
             ->get();
 
         $faturas_que_vem = Expense::where('user_id', FacadesAuth::id())
             ->where(function ($q) {
+                $q->whereIn('category_id', [1, 2])
+                    ->whereIn('payment_method_id', [2, 3]);
+            })
+            ->orWhere(function ($q) {
                 $q->where('end_date', '>=', now()->addMonths(1))
-                    ->orWhereIn('category_id', [1, 2]);
+                    ->whereIn('payment_method_id', [2, 3]);
             })
             ->get();
 
@@ -28,7 +31,7 @@ class DashboardController extends Controller
             ->get();
 
         $debitos_mes_que_vem = Expense::where('user_id', FacadesAuth::id())
-            ->whereIn('category_id', [1,2])
+            ->whereIn('category_id', [1, 2])
             ->where('payment_method_id', '!=', 3)
             ->get();
 

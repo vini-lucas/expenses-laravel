@@ -38,12 +38,6 @@ Gerar a chave no .env:
 php artisan key:generate
 ```
 
-Programar a validação diária para o framework verificar o dia da virada do mês:
-```
-crontab -e
-Após tê-lo acessado, adicionar: * * * * * php /home/seu_usuario/caminho-do-projeto/artisan schedule:run >> /dev/null 2>&1
-```
-
 Executar as migrations junto das seeders
 ```
 php artisan migrate --seed

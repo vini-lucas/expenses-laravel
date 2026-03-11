@@ -2,8 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Card;
 use App\Models\Expense;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Container\Attributes\Log;
+use Illuminate\Support\Facades\Log as FacadesLog;
 
 class checkInvoiceTurn extends Command
 {
@@ -19,18 +23,16 @@ class checkInvoiceTurn extends Command
      *
      * @var string
      */
-    protected $description = 'Verifica uma vez ao dia qual a data atual a fim de validar se a fatura fechou.';
+    protected $description = 'Todo dia 01 do mês ele realiza as validações estipuladas.';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        if (date("d") == 1) {
-            Expense::whereIn('category_id', '!=', [1,2])
+        Expense::whereIn('category_id', '!=', [1, 2])
             ->where('installment_id', 1)
             ->delete();
-        }
 
         $parcelados = Expense::where('installment_id', '!=', 1)->get();
         foreach ($parcelados as $parcelado) {
