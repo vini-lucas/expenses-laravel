@@ -41,8 +41,8 @@ class DashboardController extends Controller
             ->get();
 
         $lembretes = Expense::whereBetween('payment_deadline_id', [
-            now()->day,
-            now()->addDays(6)->day
+            now()->day, // 12
+            now()->addDays(5)->day // 18
         ])->get();
 
         $total_debito = 0;
@@ -69,8 +69,6 @@ class DashboardController extends Controller
         $total_debito += $total_faturas_so_deste_mes;
         $total_debitos_mes_que_vem += $total_faturas_que_vem;
 
-        dd($lembretes);
-
         return view('dashboard.index', [
             'name' => $name,
             'debitos' => $debitos,
@@ -81,6 +79,7 @@ class DashboardController extends Controller
             'total_faturas_so_deste_mes' => $total_faturas_so_deste_mes,
             'total_debitos_mes_que_vem' => $total_debitos_mes_que_vem,
             'debitos_mes_que_vem' => $debitos_mes_que_vem,
+            'lembretes' => $lembretes
         ]);
     }
 }

@@ -37,11 +37,39 @@
         @empty
             <span>Não há despesas (débitos) programadas para o próximo mês!</span><br>
         @endforelse
-         <span>Valor (atual) da próxima fatura = {{ $total_faturas_que_vem }}</span><br>
+        <span>Valor (atual) da próxima fatura = {{ $total_faturas_que_vem }}</span><br>
         <span><strong>Total = {{ $total_debitos_mes_que_vem }}</strong></span>
         <hr>
 
         <x-alert />
 
     </div>
+
+    <script>
+        function showAlert() {
+            const lembretes = @json($lembretes);
+            lembretes.forEach(lembrete => {
+                textAlert += 'Atenção! O prazo para o ' + pagamentoDaDespesa() + Object.keys(lembretes).length != 0 ? ''
+                    ' encerra-se em 5 dias ou menos!\n';
+            });
+
+            function pagamentoDaDespesa() {
+                if (Object.keys(lembretes).length != 0) {
+                    return 'pagamento das despesas ';
+                } else {
+                    return 'pagamento da despesa';
+                }
+            }
+            let textAlert = '';
+            lembretes.forEach(lembrete => {
+                textAlert += 'Atenção! O prazo para o ' + pagamentoDaDespesa() + Object.keys(lembretes).length != 0 ? ''
+                    ' encerra-se em 5 dias ou menos!\n';
+            });
+
+            if (textAlert !== '') {
+            alert(textAlert);
+        }
+        }
+        showAlert();
+    </script>
 @endsection
