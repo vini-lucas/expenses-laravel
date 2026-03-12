@@ -48,27 +48,15 @@
     <script>
         function showAlert() {
             const lembretes = @json($lembretes);
-            lembretes.forEach(lembrete => {
-                textAlert += 'Atenção! O prazo para o ' + pagamentoDaDespesa() + Object.keys(lembretes).length != 0 ? ''
-                    ' encerra-se em 5 dias ou menos!\n';
-            });
-
-            function pagamentoDaDespesa() {
-                if (Object.keys(lembretes).length != 0) {
-                    return 'pagamento das despesas ';
-                } else {
-                    return 'pagamento da despesa';
-                }
-            }
             let textAlert = '';
             lembretes.forEach(lembrete => {
-                textAlert += 'Atenção! O prazo para o ' + pagamentoDaDespesa() + Object.keys(lembretes).length != 0 ? ''
+                textAlert += 'O prazo para o pagamento da despesa ' + lembrete.name +
                     ' encerra-se em 5 dias ou menos!\n';
             });
 
             if (textAlert !== '') {
-            alert(textAlert);
-        }
+                alert(textAlert);
+            }
         }
         showAlert();
     </script>
